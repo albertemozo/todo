@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  php:
+    image: dunglas/frankenphp
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/app
+    environment:
+      - FRANKENPHP_CONFIG="worker ./public/index.php"
+    depends_on:
+      - db
+      - rabbitmq
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: database
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    ports:
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: username
+      RABBITMQ_DEFAULT_PASS: password
