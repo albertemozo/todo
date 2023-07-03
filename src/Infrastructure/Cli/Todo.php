@@ -17,14 +17,17 @@ class Todo extends Command
     {
         $this
             // configure an argument
-            ->addArgument('operation', InputArgument::OPTIONAL, 'The operation to be executed.')
-            // ...
-        ;
+            ->addArgument(
+                'operation',
+                InputArgument::OPTIONAL,
+                'The operation to be executed.',
+                'list'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $operation = $input->getArgument('operation') ?? 'list';
+        $operation = $input->getArgument('operation');
 
         if ($operation !== 'list') {
             $output->writeln('Unknown command.');
