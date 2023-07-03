@@ -6,6 +6,7 @@ namespace App\Tests\Infrastructure\Cli;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class TodoShould extends KernelTestCase
@@ -23,5 +24,22 @@ class TodoShould extends KernelTestCase
         $commandTester->execute([]);
 
         $commandTester->assertCommandIsSuccessful();
+    }
+
+    /**
+     * @test
+     */
+    public function rejectUnknownCommands(): void
+    {
+        $kernel = self::bootKernel();
+        $application = new Application($kernel);
+
+        $command = $application->find('todo');
+        $commandTester = new CommandTester($command);
+        $output = $commandTester->execute([
+            'operation' => 'unknown',
+        ]);
+
+        $this->assertEquals(Command::FAILURE, $output);
     }
 }
