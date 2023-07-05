@@ -46,4 +46,18 @@ class PostgresTodoRepository implements TodoRepository
 
         $stmt->execute();
     }
+
+    public function save(Todo $todo): void
+    {
+        $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
+        $stmt = $this->connection->prepare($query);
+
+        $id = $todo->id();
+        $description = $todo->description();
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':description', $description);
+
+        $stmt->execute();
+    }
 }
