@@ -8,9 +8,9 @@ use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use Ramsey\Uuid\Uuid;
 
-class Add
+readonly class Add
 {
-    public function __construct(private readonly TodoRepository $todoRepository)
+    public function __construct(private TodoRepository $todoRepository)
     {
     }
 
