@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(name: 'todo:add')]
-class Add extends Command
+class AddTodo extends Command
 {
     protected function configure(): void
     {

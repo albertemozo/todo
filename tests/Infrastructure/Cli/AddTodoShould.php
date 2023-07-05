@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Infrastructure\Cli;
+namespace Infrastructure\Cli;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class TodoShould extends KernelTestCase
+class AddTodoShould extends KernelTestCase
 {
     /**
      * @test
@@ -19,9 +18,11 @@ class TodoShould extends KernelTestCase
         $kernel = self::bootKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('todo:list');
+        $command = $application->find('todo:add');
         $commandTester = new CommandTester($command);
-        $commandTester->execute([]);
+        $commandTester->execute([
+            'todo' => 'Laundry'
+        ]);
 
         $commandTester->assertCommandIsSuccessful();
     }
