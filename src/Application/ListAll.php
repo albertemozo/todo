@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Domain\Todo;
 use App\Domain\TodoRepository;
 
 class ListAll
@@ -12,8 +13,11 @@ class ListAll
     {
     }
 
+    /**
+     * @return Todo[]
+     */
     public function __invoke(): array
     {
-        return $this->todoRepository->allRecords();
+        return $this->todoRepository->all();
     }
 }

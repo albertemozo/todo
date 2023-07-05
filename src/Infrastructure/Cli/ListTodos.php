@@ -23,7 +23,7 @@ class ListTodos extends Command
         $todos = ($this->listAll)();
 
         foreach ($todos as $todo) {
-            $output->writeln($todo);
+            $output->writeln($todo->description());
         }
 
         return Command::SUCCESS;
