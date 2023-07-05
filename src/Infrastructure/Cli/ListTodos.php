@@ -14,6 +14,7 @@ class ListTodos extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('Laundry');
         return Command::SUCCESS;
     }
 }
