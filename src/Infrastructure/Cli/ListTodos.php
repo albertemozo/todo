@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Cli;
 
+use App\Application\ListAll;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,6 +16,7 @@ class ListTodos extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $todos = ['Laundry'];
+        $todos = (new ListAll())();
 
         foreach ($todos as $todo) {
             $output->writeln($todo);
