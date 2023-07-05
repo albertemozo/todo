@@ -24,8 +24,11 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Domain\TodoRepository: '@App\Infrastructure\Persistence\PostgresTodoRepository'
+    App\Domain\EventBus: '@App\Infrastructure\RabbitEventBus'
 
 when@test:
     services:
         App\Domain\TodoRepository:
             public: true
+
+        App\Domain\EventBus: '@App\Infrastructure\InMemoryEventBus'

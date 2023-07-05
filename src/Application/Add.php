@@ -18,7 +18,7 @@ readonly class Add
 
     public function __invoke(string $description): void
     {
-        $todo = new Todo(Uuid::uuid4()->toString(), $description);
+        $todo = Todo::create(Uuid::uuid4()->toString(), $description);
         $this->todoRepository->save($todo);
         $this->eventBus->publish(...$todo->pullDomainEvents());
     }

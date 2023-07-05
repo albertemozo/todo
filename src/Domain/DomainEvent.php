@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain;
 
-interface DomainEvent
+use JsonSerializable;
+
+interface DomainEvent extends JsonSerializable
 {
 }
