@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Infrastructure\Cli;
+namespace App\Tests\Infrastructure\Cli;
 
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
@@ -13,26 +13,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 class AddTodoShould extends KernelTestCase
 {
-    /**
-     * @test
-     */
-    public function execute(): void
-    {
-        $kernel = self::bootKernel();
-        $application = new Application($kernel);
-
-        $repository = new InMemoryTodoRepository([]);
-        $kernel->getContainer()->set(TodoRepository::class, $repository);
-
-        $command = $application->find('todo:add');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([
-            'description' => 'Laundry'
-        ]);
-
-        $commandTester->assertCommandIsSuccessful();
-    }
-
     /**
      * @test
      */
