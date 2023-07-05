@@ -12,8 +12,8 @@ class Add
     {
     }
 
-    public function __invoke(): void
+    public function __invoke(string $todo): void
     {
-        $this->todoRepository->save('Laundry');
+        $this->todoRepository->save($todo);
     }
 }
