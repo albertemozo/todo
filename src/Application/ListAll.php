@@ -8,7 +8,7 @@ use App\Domain\TodoRepository;
 
 class ListAll
 {
-    public function __construct(private TodoRepository $todoRepository)
+    public function __construct(private readonly TodoRepository $todoRepository)
     {
     }
 
