@@ -13,9 +13,7 @@ class Todo extends AggregateRoot
     public static function create(string $id, string $description): self
     {
         $todo = new self($id, $description);
-
         $todo->recordThat(new TodoCreated($id, $description));
-
         return $todo;
     }
 
