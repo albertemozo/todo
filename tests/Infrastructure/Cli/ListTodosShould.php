@@ -38,7 +38,7 @@ class ListTodosShould extends KernelTestCase
         $kernel = self::bootKernel();
         $application = new Application($kernel);
 
-        $repository = new InMemoryTodoRepository(['Laundry']);
+        $repository = new InMemoryTodoRepository(['Laundry', 'Cleaning']);
         $kernel->getContainer()->set(TodoRepository::class, $repository);
 
         $command = $application->find('todo:list');
@@ -47,5 +47,6 @@ class ListTodosShould extends KernelTestCase
 
         $output = $commandTester->getDisplay();
         $this->assertStringContainsString('Laundry', $output);
+        $this->assertStringContainsString('Cleaning', $output);
     }
 }
