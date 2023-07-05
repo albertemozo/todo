@@ -37,10 +37,8 @@ class PostgresTodoRepository implements TodoRepository
         return $todos;
     }
 
-    public function save(string $todo): void
+    public function saveString(string $todo): void
     {
-        // Generate a new UUID
-
         $query = "INSERT INTO todos (id, description) VALUES (gen_random_uuid(), :description)";
         $stmt = $this->connection->prepare($query);
 

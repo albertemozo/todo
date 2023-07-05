@@ -11,5 +11,5 @@ interface TodoRepository
      */
     public function all(): array;
 
-    public function save(string $todo): void;
+    public function saveString(string $todo): void;
 }

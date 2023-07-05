@@ -24,7 +24,7 @@ class InMemoryTodoRepository implements TodoRepository
         return $todos;
     }
 
-    public function save(string $todo): void
+    public function saveString(string $todo): void
     {
         $this->todos[] = $todo;
     }

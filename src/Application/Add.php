@@ -14,6 +14,6 @@ class Add
 
     public function __invoke(string $todo): void
     {
-        $this->todoRepository->save($todo);
+        $this->todoRepository->saveString($todo);
     }
 }
