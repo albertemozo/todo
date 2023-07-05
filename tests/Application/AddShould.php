@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Application;
 
 use App\Application\Add;
+use App\Domain\Todo;
 use App\Infrastructure\Persistence\InMemoryTodoRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -29,6 +30,7 @@ class AddShould extends TestCase
         $repository = new InMemoryTodoRepository();
         $add = new Add($repository);
         $add('Laundry');
-        $this->assertContains('Laundry', $repository->allRecords());
+
+        $this->assertNotEmpty(array_filter($repository->all(), static fn(Todo $todo) => $todo->description() === 'Laundry'));
     }
 }
