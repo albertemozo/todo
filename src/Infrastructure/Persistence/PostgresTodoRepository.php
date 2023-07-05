@@ -23,12 +23,6 @@ class PostgresTodoRepository implements TodoRepository
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function allRecords(): array
-    {
-        $statement = $this->connection->query('SELECT * FROM todos');
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
     public function all(): array
     {
         $statement = $this->connection->query('SELECT * FROM todos');

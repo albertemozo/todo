@@ -7,11 +7,6 @@ namespace App\Domain;
 interface TodoRepository
 {
     /**
-     * @return string[]
-     */
-    public function allRecords(): array;
-
-    /**
      * @return Todo[]
      */
     public function all(): array;

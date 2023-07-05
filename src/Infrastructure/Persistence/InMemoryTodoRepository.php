@@ -13,11 +13,6 @@ class InMemoryTodoRepository implements TodoRepository
     {
     }
 
-    public function allRecords(): array
-    {
-        return $this->todos;
-    }
-
     public function all(): array
     {
        $todos = [];
