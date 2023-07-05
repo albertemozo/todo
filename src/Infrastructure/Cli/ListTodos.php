@@ -13,9 +13,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'todo:list')]
 class ListTodos extends Command
 {
+    public function __construct(private readonly ListAll $listAll)
+    {
+        parent::__construct();
+    }
+
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $todos = (new ListAll())();
+        $todos = ($this->listAll)();
 
         foreach ($todos as $todo) {
             $output->writeln($todo);

@@ -20,6 +20,9 @@ class ListTodosShould extends KernelTestCase
         $kernel = self::bootKernel();
         $application = new Application($kernel);
 
+        $repository = new InMemoryTodoRepository(['Laundry']);
+        $kernel->getContainer()->set(TodoRepository::class, $repository);
+
         $command = $application->find('todo:list');
         $commandTester = new CommandTester($command);
         $commandTester->execute([]);
