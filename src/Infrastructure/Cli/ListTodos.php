@@ -14,7 +14,12 @@ class ListTodos extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('Laundry');
+        $todos = ['Laundry'];
+
+        foreach ($todos as $todo) {
+            $output->writeln($todo);
+        }
+
         return Command::SUCCESS;
     }
 }
