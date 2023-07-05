@@ -18,13 +18,18 @@ class InMemoryTodoRepository implements TodoRepository
        $todos = [];
 
         foreach ($this->todos as $todo) {
-            $todos[] = new Todo('some_id', $todo);
+            $todos[] = new Todo('some_id', $todo instanceof Todo ? $todo->description() : $todo);
         }
 
         return $todos;
     }
 
     public function saveString(string $todo): void
+    {
+        $this->todos[] = $todo;
+    }
+
+    public function save(Todo $todo): void
     {
         $this->todos[] = $todo;
     }
