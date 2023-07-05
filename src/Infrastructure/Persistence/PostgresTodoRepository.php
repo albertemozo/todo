@@ -26,9 +26,7 @@ class PostgresTodoRepository implements TodoRepository
     public function allRecords(): array
     {
         $statement = $this->connection->query('SELECT * FROM todos');
-        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        return $records;
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function all(): array
