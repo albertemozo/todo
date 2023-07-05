@@ -22,6 +22,11 @@ class Todo extends Command
                 InputArgument::OPTIONAL,
                 'The operation to be executed.',
                 'list'
+            )
+            ->addArgument(
+                'todo',
+                InputArgument::OPTIONAL,
+                'The TODO item.'
             );
     }
 
@@ -29,7 +34,7 @@ class Todo extends Command
     {
         $operation = $input->getArgument('operation');
 
-        if ($operation !== 'list') {
+        if ($operation !== 'list' && $operation !== 'add') {
             $output->writeln('Unknown command.');
             return Command::FAILURE;
         }

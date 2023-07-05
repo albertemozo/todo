@@ -42,4 +42,22 @@ class TodoShould extends KernelTestCase
 
         $this->assertEquals(Command::FAILURE, $output);
     }
+
+    /**
+     * @test
+     */
+    public function addATodo(): void
+    {
+        $kernel = self::bootKernel();
+        $application = new Application($kernel);
+
+        $command = $application->find('todo');
+        $commandTester = new CommandTester($command);
+        $commandTester->execute([
+            'operation' => 'add',
+            'todo' => 'Laundry',
+        ]);
+
+        $commandTester->assertCommandIsSuccessful();
+    }
 }
