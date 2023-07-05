@@ -8,7 +8,7 @@ use App\Domain\TodoRepository;
 
 class InMemoryTodoRepository implements TodoRepository
 {
-    public function __construct(private array $todos)
+    public function __construct(private array $todos = [])
     {
     }
 
