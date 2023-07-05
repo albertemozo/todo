@@ -27,7 +27,7 @@ class AddTodoShould extends KernelTestCase
         $command = $application->find('todo:add');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
-            'todo' => 'Laundry'
+            'description' => 'Laundry'
         ]);
 
         $commandTester->assertCommandIsSuccessful();
@@ -47,7 +47,7 @@ class AddTodoShould extends KernelTestCase
         $command = $application->find('todo:add');
         $commandTester = new CommandTester($command);
         $commandTester->execute([
-            'todo' => 'Laundry'
+            'description' => 'Laundry'
         ]);
 
         $this->assertNotEmpty(array_filter($repository->all(), static fn(Todo $todo) => $todo->description() === 'Laundry'));
