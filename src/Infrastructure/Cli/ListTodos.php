@@ -15,7 +15,6 @@ class ListTodos extends Command
 {
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $todos = ['Laundry'];
         $todos = (new ListAll())();
 
         foreach ($todos as $todo) {
