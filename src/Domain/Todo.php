@@ -6,7 +6,7 @@ namespace App\Domain;
 
 class Todo
 {
-    public function __construct(private readonly string $id, private string $description)
+    public function __construct(private readonly string $id, private readonly string $description)
     {
     }
 
