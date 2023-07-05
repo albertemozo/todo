@@ -9,19 +9,16 @@ use App\Domain\TodoRepository;
 
 class InMemoryTodoRepository implements TodoRepository
 {
+    /**
+     * @param array<Todo> $todos
+     */
     public function __construct(private array $todos = [])
     {
     }
 
     public function all(): array
     {
-       $todos = [];
-
-        foreach ($this->todos as $todo) {
-            $todos[] = new Todo('some_id', $todo instanceof Todo ? $todo->description() : $todo);
-        }
-
-        return $todos;
+       return $this->todos;
     }
 
     public function save(Todo $todo): void
