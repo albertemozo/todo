@@ -19,44 +19,9 @@ class TodoShould extends KernelTestCase
         $kernel = self::bootKernel();
         $application = new Application($kernel);
 
-        $command = $application->find('todo');
+        $command = $application->find('todo:list');
         $commandTester = new CommandTester($command);
         $commandTester->execute([]);
-
-        $commandTester->assertCommandIsSuccessful();
-    }
-
-    /**
-     * @test
-     */
-    public function rejectUnknownCommands(): void
-    {
-        $kernel = self::bootKernel();
-        $application = new Application($kernel);
-
-        $command = $application->find('todo');
-        $commandTester = new CommandTester($command);
-        $output = $commandTester->execute([
-            'operation' => 'unknown',
-        ]);
-
-        $this->assertEquals(Command::FAILURE, $output);
-    }
-
-    /**
-     * @test
-     */
-    public function addATodo(): void
-    {
-        $kernel = self::bootKernel();
-        $application = new Application($kernel);
-
-        $command = $application->find('todo');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([
-            'operation' => 'add',
-            'todo' => 'Laundry',
-        ]);
 
         $commandTester->assertCommandIsSuccessful();
     }
