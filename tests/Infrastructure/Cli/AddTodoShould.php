@@ -49,6 +49,6 @@ class AddTodoShould extends KernelTestCase
             'todo' => 'Laundry'
         ]);
 
-        self::assertContains('Laundry', $repository->all());
+        self::assertContains('Laundry', $repository->allRecords());
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence;
 
+use App\Domain\Todo;
 use App\Domain\TodoRepository;
 
 class InMemoryTodoRepository implements TodoRepository
@@ -12,9 +13,20 @@ class InMemoryTodoRepository implements TodoRepository
     {
     }
 
-    public function all(): array
+    public function allRecords(): array
     {
         return $this->todos;
+    }
+
+    public function all(): array
+    {
+       $todos = [];
+
+        foreach ($this->todos as $todo) {
+            $todos[] = new Todo('some_id', $todo);
+        }
+
+        return $todos;
     }
 
     public function save(string $todo): void

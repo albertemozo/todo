@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence;
 
+use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use PDO;
-use PDOException;
 
 class PostgresTodoRepository implements TodoRepository
 {
@@ -23,10 +23,26 @@ class PostgresTodoRepository implements TodoRepository
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
+    public function allRecords(): array
+    {
+        $statement = $this->connection->query('SELECT * FROM todos');
+        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $records;
+    }
+
     public function all(): array
     {
         $statement = $this->connection->query('SELECT * FROM todos');
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $records = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        $todos = [];
+
+        foreach ($records as $record) {
+            $todos[] = new Todo($record['id'], $record['description']);
+        }
+
+        return $todos;
     }
 
     public function save(string $todo): void

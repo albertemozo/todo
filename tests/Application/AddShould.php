@@ -29,6 +29,6 @@ class AddShould extends TestCase
         $repository = new InMemoryTodoRepository();
         $add = new Add($repository);
         $add('Laundry');
-        $this->assertContains('Laundry', $repository->all());
+        $this->assertContains('Laundry', $repository->allRecords());
     }
 }

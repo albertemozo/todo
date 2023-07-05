@@ -14,6 +14,6 @@ class ListAll
 
     public function __invoke(): array
     {
-        return $this->todoRepository->all();
+        return $this->todoRepository->allRecords();
     }
 }
