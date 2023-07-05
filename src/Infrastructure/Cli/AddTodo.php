@@ -14,6 +14,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'todo:add')]
 class AddTodo extends Command
 {
+    private const ARGUMENT_DESCRIPTION = 'description';
+
     public function __construct(private readonly Add $add)
     {
         parent::__construct();
@@ -23,15 +25,16 @@ class AddTodo extends Command
     {
         $this
             ->addArgument(
-                'todo',
+                self::ARGUMENT_DESCRIPTION,
                 InputArgument::REQUIRED,
-                'The TODO item.'
+                'The TODO item description.'
             );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        ($this->add)($input->getArgument('todo'));
+        $description = (string)$input->getArgument(self::ARGUMENT_DESCRIPTION);
+        ($this->add)($description);
         return Command::SUCCESS;
     }
 }
