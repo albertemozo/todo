@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Cli;
 
+use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use App\Infrastructure\Persistence\InMemoryTodoRepository;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -49,6 +50,6 @@ class AddTodoShould extends KernelTestCase
             'todo' => 'Laundry'
         ]);
 
-        self::assertContains('Laundry', $repository->allRecords());
+        $this->assertNotEmpty(array_filter($repository->all(), static fn(Todo $todo) => $todo->description() === 'Laundry'));
     }
 }
