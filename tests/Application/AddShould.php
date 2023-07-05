@@ -6,6 +6,7 @@ namespace Application;
 
 use App\Application\Add;
 use App\Domain\Todo;
+use App\Infrastructure\InMemoryEventBus;
 use App\Infrastructure\Persistence\InMemoryTodoRepository;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +18,8 @@ class AddShould extends TestCase
     public function addAnItem(): void
     {
         $repository = new InMemoryTodoRepository();
-        $add = new Add($repository);
+        $eventBus = new InMemoryEventBus();
+        $add = new Add($repository, $eventBus);
         $add('Laundry');
 
         $this->assertNotEmpty(array_filter(

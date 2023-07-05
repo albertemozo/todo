@@ -18,6 +18,8 @@ services:
     image: postgres:15
     ports:
       - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
@@ -30,3 +32,6 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: username
       RABBITMQ_DEFAULT_PASS: password
+
+volumes:
+  pgdata:

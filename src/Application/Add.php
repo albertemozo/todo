@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Domain\EventBus;
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use Ramsey\Uuid\Uuid;
 
 readonly class Add
 {
-    public function __construct(private TodoRepository $todoRepository)
+
+    public function __construct(private TodoRepository $todoRepository, private readonly EventBus $eventBus)
     {
     }
 
@@ -18,5 +20,6 @@ readonly class Add
     {
         $todo = new Todo(Uuid::uuid4()->toString(), $description);
         $this->todoRepository->save($todo);
+        $this->eventBus->publish(...$todo->pullDomainEvents());
     }
 }
