@@ -25,16 +25,16 @@ class PostgresEventOutbox
 
     public function save(DomainEvent $event): void
     {
-        $query = "INSERT INTO event_outbox (id, type, body) VALUES (:id, :type, :body)";
+        $query = "INSERT INTO event_outbox (id, type, data) VALUES (:id, :type, :data)";
         $stmt = $this->connection->prepare($query);
 
         $id = Uuid::uuid4()->toString();
         $type = get_class($event);
-        $body = $event->jsonSerialize();
+        $data = $event->jsonSerialize();
 
         $stmt->bindParam(':id', $id);
         $stmt->bindParam(':type', $type);
-        $stmt->bindParam(':body', $body);
+        $stmt->bindParam(':data', $data);
 
         $stmt->execute();
     }
