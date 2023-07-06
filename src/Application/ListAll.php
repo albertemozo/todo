@@ -7,9 +7,9 @@ namespace App\Application;
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
 
-class ListAll
+readonly class ListAll
 {
-    public function __construct(private readonly TodoRepository $todoRepository)
+    public function __construct(private TodoRepository $todoRepository)
     {
     }
 
