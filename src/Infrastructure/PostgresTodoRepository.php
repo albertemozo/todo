@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
+use App\Domain\DomainEvent;
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use PDO;
+use Ramsey\Uuid\Uuid;
 
 class PostgresTodoRepository implements TodoRepository
 {
@@ -39,6 +41,10 @@ class PostgresTodoRepository implements TodoRepository
 
     public function save(Todo $todo): void
     {
+        foreach ($todo->pullDomainEvents() as $event) {
+            $this->saveInTheOutbox($event);
+        }
+
         $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
         $stmt = $this->connection->prepare($query);
 
@@ -64,5 +70,19 @@ class PostgresTodoRepository implements TodoRepository
     public function commit(): void
     {
         $this->connection->commit();
+    }
+
+    private function saveInTheOutbox(DomainEvent $event): void
+    {
+        $query = "INSERT INTO event_outbox (id, body) VALUES (:id, :body)";
+        $stmt = $this->connection->prepare($query);
+
+        $id = Uuid::uuid4()->toString();
+        $body = $event->jsonSerialize();
+
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':body', $body);
+
+        $stmt->execute();
     }
 }
