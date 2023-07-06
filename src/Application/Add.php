@@ -12,7 +12,7 @@ use Throwable;
 
 readonly class Add
 {
-    public function __construct(private TodoRepository $todoRepository, private EventBus $eventBus)
+    public function __construct(private TodoRepository $todoRepository)
     {
     }
 

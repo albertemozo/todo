@@ -18,8 +18,7 @@ class AddShould extends TestCase
     public function addAnItem(): void
     {
         $repository = new InMemoryTodoRepository();
-        $eventBus = new InMemoryEventBus();
-        $add = new Add($repository, $eventBus);
+        $add = new Add($repository);
         $add('Laundry');
 
         $this->assertNotEmpty(array_filter(
