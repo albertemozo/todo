@@ -46,9 +46,7 @@ class PostgresTodoRepository implements TodoRepository
         $this->connection->beginTransaction();
 
         try {
-            foreach ($todo->pullDomainEvents() as $event) {
-                $this->eventOutbox->save($event);
-            }
+            $this->eventOutbox->save(...$todo->pullDomainEvents());
 
             $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
             $stmt = $this->connection->prepare($query);

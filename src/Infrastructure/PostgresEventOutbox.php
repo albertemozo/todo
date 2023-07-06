@@ -24,19 +24,21 @@ class PostgresEventOutbox implements EventOutbox
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function save(DomainEvent $event): void
+    public function save(DomainEvent ...$events): void
     {
-        $query = "INSERT INTO event_outbox (id, type, data) VALUES (:id, :type, :data)";
-        $stmt = $this->connection->prepare($query);
+        foreach ($events as $event) {
+            $query = "INSERT INTO event_outbox (id, type, data) VALUES (:id, :type, :data)";
+            $stmt = $this->connection->prepare($query);
 
-        $id = Uuid::uuid4()->toString();
-        $type = get_class($event);
-        $data = $event->jsonSerialize();
+            $id = Uuid::uuid4()->toString();
+            $type = get_class($event);
+            $data = $event->jsonSerialize();
 
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':type', $type);
-        $stmt->bindParam(':data', $data);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':type', $type);
+            $stmt->bindParam(':data', $data);
 
-        $stmt->execute();
+            $stmt->execute();
+        }
     }
 }
