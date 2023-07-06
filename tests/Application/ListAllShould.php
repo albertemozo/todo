@@ -17,7 +17,7 @@ class ListAllShould extends TestCase
      */
     public function listAllTodos(): void
     {
-        $todo = new Todo(Uuid::uuid4()->toString(), 'Laundry');
+        $todo = Todo::rebuild(Uuid::uuid4()->toString(), 'Laundry');
         $repository = new InMemoryTodoRepository([$todo]);
         $listAll = new ListAll($repository);
 

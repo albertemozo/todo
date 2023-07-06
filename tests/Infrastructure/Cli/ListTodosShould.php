@@ -23,8 +23,8 @@ class ListTodosShould extends KernelTestCase
         $application = new Application($kernel);
 
 
-        $laundry = new Todo(Uuid::uuid4()->toString(), 'Laundry');
-        $cleaning = new Todo(Uuid::uuid4()->toString(), 'Cleaning');
+        $laundry = Todo::rebuild(Uuid::uuid4()->toString(), 'Laundry');
+        $cleaning = Todo::rebuild(Uuid::uuid4()->toString(), 'Cleaning');
         $repository = new InMemoryTodoRepository([$laundry, $cleaning]);
         $kernel->getContainer()->set(TodoRepository::class, $repository);
 

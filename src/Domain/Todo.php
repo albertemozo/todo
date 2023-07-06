@@ -6,7 +6,7 @@ namespace App\Domain;
 
 class Todo extends AggregateRoot
 {
-    public function __construct(private readonly string $id, private readonly string $description)
+    private function __construct(private readonly string $id, private readonly string $description)
     {
     }
 
@@ -15,6 +15,11 @@ class Todo extends AggregateRoot
         $todo = new self($id, $description);
         $todo->recordThat(new TodoCreated($id, $description));
         return $todo;
+    }
+
+    public static function rebuild(string $id, string $description): self
+    {
+        return new self($id, $description);
     }
 
     public function id(): string
