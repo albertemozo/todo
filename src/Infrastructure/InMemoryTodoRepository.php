@@ -10,7 +10,7 @@ use App\Domain\TodoRepository;
 class InMemoryTodoRepository implements TodoRepository
 {
     /**
-     * @param array<Todo> $todos
+     * @param Todo[] $todos
      */
     public function __construct(private array $todos = [])
     {
