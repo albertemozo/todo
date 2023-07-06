@@ -35,6 +35,7 @@ class AddTodo extends Command
     {
         $description = (string)$input->getArgument(self::ARGUMENT_DESCRIPTION);
         ($this->add)($description);
+        $output->writeln("\"{$description}\" added.");
         return Command::SUCCESS;
     }
 }
