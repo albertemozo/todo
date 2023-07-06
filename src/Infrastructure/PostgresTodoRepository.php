@@ -31,7 +31,7 @@ class PostgresTodoRepository implements TodoRepository
         $todos = [];
 
         foreach ($records as $record) {
-            $todos[] = new Todo($record['id'], $record['description']);
+            $todos[] = Todo::rebuild($record['id'], $record['description']);
         }
 
         return $todos;
@@ -49,5 +49,20 @@ class PostgresTodoRepository implements TodoRepository
         $stmt->bindParam(':description', $description);
 
         $stmt->execute();
+    }
+
+    public function beginTransaction(): void
+    {
+        $this->connection->beginTransaction();
+    }
+
+    public function rollBack(): void
+    {
+        $this->connection->rollBack();
+    }
+
+    public function commit(): void
+    {
+        $this->connection->commit();
     }
 }

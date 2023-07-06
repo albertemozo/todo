@@ -12,4 +12,10 @@ interface TodoRepository
     public function all(): array;
 
     public function save(Todo $todo): void;
+
+    public function beginTransaction(): void;
+
+    public function rollBack(): void;
+
+    public function commit(): void;
 }
