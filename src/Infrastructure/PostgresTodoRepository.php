@@ -9,6 +9,7 @@ use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use PDO;
 use Ramsey\Uuid\Uuid;
+use Throwable;
 
 class PostgresTodoRepository implements TodoRepository
 {
@@ -41,20 +42,29 @@ class PostgresTodoRepository implements TodoRepository
 
     public function save(Todo $todo): void
     {
-        foreach ($todo->pullDomainEvents() as $event) {
-            $this->saveInTheOutbox($event);
+        $this->connection->beginTransaction();
+
+        try {
+            foreach ($todo->pullDomainEvents() as $event) {
+                $this->saveInTheOutbox($event);
+            }
+
+            $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
+            $stmt = $this->connection->prepare($query);
+
+            $id = $todo->id();
+            $description = $todo->description();
+
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':description', $description);
+
+            $stmt->execute();
+        } catch (Throwable $throwable) {
+            $this->connection->rollBack();
+            throw $throwable;
         }
 
-        $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
-        $stmt = $this->connection->prepare($query);
-
-        $id = $todo->id();
-        $description = $todo->description();
-
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':description', $description);
-
-        $stmt->execute();
+        $this->connection->commit();
     }
 
     public function beginTransaction(): void

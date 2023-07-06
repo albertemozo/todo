@@ -20,15 +20,6 @@ readonly class Add
     {
         $todo = Todo::create(Uuid::uuid4()->toString(), $description);
 
-        $this->todoRepository->beginTransaction();
-
-        try {
-            $this->todoRepository->save($todo);
-            $this->eventBus->publish(...$todo->pullDomainEvents());
-        } catch (Throwable) {
-            $this->todoRepository->rollBack();
-        }
-
-        $this->todoRepository->commit();
+        $this->todoRepository->save($todo);
     }
 }
