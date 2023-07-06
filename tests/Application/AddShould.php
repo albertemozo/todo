@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Application;
+namespace App\Tests\Application;
 
 use App\Application\Add;
 use App\Domain\Todo;
