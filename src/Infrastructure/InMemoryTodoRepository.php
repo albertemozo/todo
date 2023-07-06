@@ -25,16 +25,4 @@ class InMemoryTodoRepository implements TodoRepository
     {
         $this->todos[] = $todo;
     }
-
-    public function beginTransaction(): void
-    {
-    }
-
-    public function rollBack(): void
-    {
-    }
-
-    public function commit(): void
-    {
-    }
 }

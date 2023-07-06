@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
-use App\Domain\DomainEvent;
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use PDO;
-use Ramsey\Uuid\Uuid;
 use Throwable;
 
 class PostgresTodoRepository implements TodoRepository
 {
     private PDO $connection;
+    private PostgresEventOutbox $eventOutbox;
 
     public function __construct()
     {
@@ -24,6 +23,7 @@ class PostgresTodoRepository implements TodoRepository
         );
 
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->eventOutbox = new PostgresEventOutbox();
     }
 
     public function all(): array
@@ -46,7 +46,7 @@ class PostgresTodoRepository implements TodoRepository
 
         try {
             foreach ($todo->pullDomainEvents() as $event) {
-                $this->saveInTheOutbox($event);
+                $this->eventOutbox->save($event);
             }
 
             $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
@@ -67,32 +67,8 @@ class PostgresTodoRepository implements TodoRepository
         $this->connection->commit();
     }
 
-    public function beginTransaction(): void
+    public function connection(): PDO
     {
-        $this->connection->beginTransaction();
-    }
-
-    public function rollBack(): void
-    {
-        $this->connection->rollBack();
-    }
-
-    public function commit(): void
-    {
-        $this->connection->commit();
-    }
-
-    private function saveInTheOutbox(DomainEvent $event): void
-    {
-        $query = "INSERT INTO event_outbox (id, body) VALUES (:id, :body)";
-        $stmt = $this->connection->prepare($query);
-
-        $id = Uuid::uuid4()->toString();
-        $body = $event->jsonSerialize();
-
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':body', $body);
-
-        $stmt->execute();
+        return $this->connection;
     }
 }
