@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Infrastructure;
 
 use App\Domain\DomainEvent;
+use App\Domain\EventOutbox;
 use PDO;
 use Ramsey\Uuid\Uuid;
 
-class PostgresEventOutbox
+class PostgresEventOutbox implements EventOutbox
 {
     private PDO $connection;
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure;
 
+use App\Domain\EventOutbox;
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use PDO;
@@ -12,7 +13,7 @@ use Throwable;
 class PostgresTodoRepository implements TodoRepository
 {
     private PDO $connection;
-    private PostgresEventOutbox $eventOutbox;
+    private EventOutbox $eventOutbox;
 
     public function __construct()
     {
