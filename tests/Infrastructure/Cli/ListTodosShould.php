@@ -17,25 +17,6 @@ class ListTodosShould extends KernelTestCase
     /**
      * @test
      */
-    public function execute(): void
-    {
-        $kernel = self::bootKernel();
-        $application = new Application($kernel);
-
-        $todo = new Todo(Uuid::uuid4()->toString(), 'Laundry');
-        $repository = new InMemoryTodoRepository([$todo]);
-        $kernel->getContainer()->set(TodoRepository::class, $repository);
-
-        $command = $application->find('todo:list');
-        $commandTester = new CommandTester($command);
-        $commandTester->execute([]);
-
-        $commandTester->assertCommandIsSuccessful();
-    }
-
-    /**
-     * @test
-     */
     public function listAllTodos(): void
     {
         $kernel = self::bootKernel();
