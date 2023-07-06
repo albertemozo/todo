@@ -21,6 +21,12 @@
         </testsuite>
     </testsuites>
 
+    <source>
+        <include>
+            <directory>./src</directory>
+        </include>
+    </source>
+
     <extensions>
     </extensions>
 </phpunit>
