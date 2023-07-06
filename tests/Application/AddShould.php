@@ -6,7 +6,6 @@ namespace Tests\Application;
 
 use App\Application\Add;
 use App\Domain\Todo;
-use App\Infrastructure\InMemoryEventBus;
 use App\Infrastructure\InMemoryTodoRepository;
 use PHPUnit\Framework\TestCase;
 
