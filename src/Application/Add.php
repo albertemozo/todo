@@ -12,7 +12,6 @@ use Throwable;
 
 readonly class Add
 {
-
     public function __construct(private TodoRepository $todoRepository, private readonly EventBus $eventBus)
     {
     }
@@ -26,7 +25,7 @@ readonly class Add
         try {
             $this->todoRepository->save($todo);
             $this->eventBus->publish(...$todo->pullDomainEvents());
-        } catch (Throwable $throwable) {
+        } catch (Throwable) {
             $this->todoRepository->rollBack();
         }
 
