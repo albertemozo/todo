@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Infrastructure\Cli;
+namespace Tests\Infrastructure\Cli;
 
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
-use App\Infrastructure\Persistence\InMemoryTodoRepository;
+use App\Infrastructure\InMemoryTodoRepository;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;

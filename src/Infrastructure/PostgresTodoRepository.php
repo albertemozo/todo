@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Persistence;
+namespace App\Infrastructure;
 
 use App\Domain\Todo;
 use App\Domain\TodoRepository;

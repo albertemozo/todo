@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Application;
+namespace Tests\Application;
 
 use App\Application\ListAll;
 use App\Domain\Todo;
-use App\Infrastructure\Persistence\InMemoryTodoRepository;
+use App\Infrastructure\InMemoryTodoRepository;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 

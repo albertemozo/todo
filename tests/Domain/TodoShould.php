@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain;
+namespace Tests\Domain;
 
 use App\Domain\DomainEvent;
 use App\Domain\Todo;
