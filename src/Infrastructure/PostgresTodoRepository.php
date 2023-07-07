@@ -13,7 +13,6 @@ use Throwable;
 class PostgresTodoRepository implements TodoRepository
 {
     private PDO $connection;
-    private EventOutbox $eventOutbox;
 
     public function __construct()
     {
@@ -24,7 +23,6 @@ class PostgresTodoRepository implements TodoRepository
         );
 
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->eventOutbox = new PostgresEventOutbox();
     }
 
     public function all(): array
