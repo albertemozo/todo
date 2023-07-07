@@ -7,6 +7,7 @@ namespace Tests\Application;
 use App\Application\Add;
 use App\Domain\Todo;
 use App\Infrastructure\InMemoryTodoRepository;
+use App\Infrastructure\InMemoryTransaction;
 use PHPUnit\Framework\TestCase;
 
 class AddShould extends TestCase
@@ -17,7 +18,8 @@ class AddShould extends TestCase
     public function addAnItem(): void
     {
         $repository = new InMemoryTodoRepository();
-        $add = new Add($repository);
+        $transaction = new InMemoryTransaction();
+        $add = new Add($repository, $transaction);
         $add('Laundry');
 
         $this->assertNotEmpty(array_filter(

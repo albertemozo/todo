@@ -6,11 +6,12 @@ namespace App\Application;
 
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
+use App\Domain\Transaction;
 use Ramsey\Uuid\Uuid;
 
 readonly class Add
 {
-    public function __construct(private TodoRepository $todoRepository)
+    public function __construct(private TodoRepository $todoRepository, private Transaction $transaction)
     {
     }
 
@@ -18,6 +19,14 @@ readonly class Add
     {
         $todo = Todo::create(Uuid::uuid4()->toString(), $description);
 
-        $this->todoRepository->save($todo);
+        $this->transaction->begin();
+
+        try {
+            $this->todoRepository->save($todo);
+        } catch (\Throwable) {
+            $this->transaction->rollBack();
+        }
+
+        $this->transaction->commit();
     }
 }
