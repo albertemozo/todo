@@ -8,6 +8,7 @@ use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use App\Domain\Transaction;
 use Ramsey\Uuid\Uuid;
+use Throwable;
 
 readonly class Add
 {
@@ -23,8 +24,9 @@ readonly class Add
 
         try {
             $this->todoRepository->save($todo);
-        } catch (\Throwable) {
+        } catch (Throwable $throwable) {
             $this->transaction->rollBack();
+            throw $throwable;
         }
 
         $this->transaction->commit();

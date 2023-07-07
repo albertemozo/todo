@@ -43,27 +43,18 @@ class PostgresTodoRepository implements TodoRepository
 
     public function save(Todo $todo): void
     {
-        $this->connection->beginTransaction();
+        $this->eventOutbox->save(...$todo->pullDomainEvents());
 
-        try {
-            $this->eventOutbox->save(...$todo->pullDomainEvents());
+        $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
+        $stmt = $this->connection->prepare($query);
 
-            $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
-            $stmt = $this->connection->prepare($query);
+        $id = $todo->id();
+        $description = $todo->description();
 
-            $id = $todo->id();
-            $description = $todo->description();
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':description', $description);
 
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':description', $description);
-
-            $stmt->execute();
-        } catch (Throwable $throwable) {
-            $this->connection->rollBack();
-            throw $throwable;
-        }
-
-        $this->connection->commit();
+        $stmt->execute();
     }
 
     public function connection(): PDO
