@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Domain\EventOutbox;
 use App\Domain\Todo;
 use App\Domain\TodoRepository;
 use App\Domain\Transaction;
@@ -12,7 +13,11 @@ use Throwable;
 
 readonly class Add
 {
-    public function __construct(private TodoRepository $todoRepository, private Transaction $transaction)
+    public function __construct(
+        private TodoRepository $todoRepository,
+        private EventOutbox $eventOutbox,
+        private Transaction $transaction
+    )
     {
     }
 
@@ -24,6 +29,7 @@ readonly class Add
 
         try {
             $this->todoRepository->save($todo);
+            $this->eventOutbox->save(...$todo->pullDomainEvents());
         } catch (Throwable $throwable) {
             $this->transaction->rollBack();
             throw $throwable;

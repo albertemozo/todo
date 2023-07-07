@@ -43,8 +43,6 @@ class PostgresTodoRepository implements TodoRepository
 
     public function save(Todo $todo): void
     {
-        $this->eventOutbox->save(...$todo->pullDomainEvents());
-
         $query = "INSERT INTO todos (id, description) VALUES (:id, :description)";
         $stmt = $this->connection->prepare($query);
 

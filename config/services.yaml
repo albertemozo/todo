@@ -24,6 +24,7 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Domain\TodoRepository: '@App\Infrastructure\PostgresTodoRepository'
+    App\Domain\EventOutbox: '@App\Infrastructure\PostgresEventOutbox'
     App\Domain\EventBus: '@App\Infrastructure\RabbitEventBus'
     App\Domain\Transaction: '@App\Infrastructure\PostgresTransaction'
 
@@ -32,5 +33,6 @@ when@test:
         App\Domain\TodoRepository:
             public: true
 
+        App\Domain\EventOutbox: '@App\Infrastructure\InMemoryEventOutbox'
         App\Domain\EventBus: '@App\Infrastructure\InMemoryEventBus'
         App\Domain\Transaction: '@App\Infrastructure\InMemoryTransaction'
