@@ -25,6 +25,7 @@ services:
 
     App\Domain\TodoRepository: '@App\Infrastructure\PostgresTodoRepository'
     App\Domain\EventBus: '@App\Infrastructure\RabbitEventBus'
+    App\Domain\Transaction: '@App\Infrastructure\PostgresTransaction'
 
 when@test:
     services:
@@ -32,3 +33,4 @@ when@test:
             public: true
 
         App\Domain\EventBus: '@App\Infrastructure\InMemoryEventBus'
+        App\Domain\Transaction: '@App\Infrastructure\InMemoryTransaction'
