@@ -30,9 +30,10 @@ services:
 
 when@test:
     services:
-        App\Domain\TodoRepository:
+        _defaults:
             public: true
 
+        App\Domain\TodoRepository: '@App\Infrastructure\InMemoryTodoRepository'
         App\Domain\EventOutbox: '@App\Infrastructure\InMemoryEventOutbox'
         App\Domain\EventBus: '@App\Infrastructure\InMemoryEventBus'
         App\Domain\Transaction: '@App\Infrastructure\InMemoryTransaction'
