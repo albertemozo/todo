@@ -23,6 +23,14 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\Infrastructure\Postgres:
+        arguments:
+            $host: '%env(POSTGRES_HOST)%'
+            $port: '%env(POSTGRES_PORT)%'
+            $database: '%env(POSTGRES_DATABASE)%'
+            $username: '%env(POSTGRES_USERNAME)%'
+            $password: '%env(POSTGRES_PASSWORD)%'
+
     App\Domain\TodoRepository: '@App\Infrastructure\PostgresTodoRepository'
     App\Domain\EventOutbox: '@App\Infrastructure\PostgresEventOutbox'
     App\Domain\EventBus: '@App\Infrastructure\RabbitEventBus'
