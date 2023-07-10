@@ -16,15 +16,9 @@ class PostgresEventOutbox implements EventOutbox
 {
     private PDO $connection;
 
-    public function __construct()
+    public function __construct(Postgres $postgres)
     {
-        $this->connection = new PDO(
-            "pgsql:host=db;port=5432;dbname=database",
-            'username',
-            'password'
-        );
-
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connection = $postgres->pdo();
     }
 
     public function save(DomainEvent ...$events): void
