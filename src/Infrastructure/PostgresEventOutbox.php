@@ -9,8 +9,6 @@ use App\Domain\EventOutbox;
 use DateTimeImmutable;
 use DateTimeInterface;
 use PDO;
-use Ramsey\Uuid\Uuid;
-use function _PHPStan_8f8c1af79\RingCentral\Psr7\str;
 
 class PostgresEventOutbox implements EventOutbox
 {
