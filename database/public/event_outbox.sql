@@ -9,6 +9,3 @@ create table event_outbox
 
 alter table event_outbox
     owner to username;
-
-me;
-
