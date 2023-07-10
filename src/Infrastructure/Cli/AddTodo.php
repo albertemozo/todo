@@ -33,6 +33,9 @@ class AddTodo extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('TO-DO');
+        $output->writeln('=====');
+
         $description = (string)$input->getArgument(self::ARGUMENT_DESCRIPTION);
         ($this->add)($description);
         $output->writeln("\"{$description}\" added.");

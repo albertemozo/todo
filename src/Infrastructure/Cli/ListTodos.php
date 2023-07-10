@@ -20,6 +20,9 @@ class ListTodos extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $output->writeln('TO-DO');
+        $output->writeln('=====');
+
         $todos = ($this->listAll)();
 
         foreach ($todos as $todo) {
