@@ -11,4 +11,6 @@ interface EventOutbox
     public function next(): DomainEvent|null;
 
     public function remove(DomainEvent $event): void;
+
+    public function pop(): DomainEvent|null;
 }

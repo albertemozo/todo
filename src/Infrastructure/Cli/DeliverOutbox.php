@@ -28,25 +28,22 @@ class DeliverOutbox extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        while ($event = $this->outbox->next()) {
-            $this->deliver($event);
-        }
-        return Command::SUCCESS;
-    }
-
-    /**
-     * @throws Throwable
-     */
-    private function deliver(DomainEvent $event): void
-    {
         $this->transaction->begin();
         try {
-            $this->outbox->remove($event);
+            $event = $this->outbox->pop();
+
+            if ($event === null) {
+                return Command::SUCCESS;
+            }
+
             $this->eventBus->publish($event);
         } catch (Throwable $throwable) {
             $this->transaction->rollBack();
             throw $throwable;
         }
         $this->transaction->commit();
+
+        return Command::SUCCESS;
     }
+
 }
