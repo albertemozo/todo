@@ -51,7 +51,6 @@ class DeliverOutboxShould extends KernelTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([]);
 
-        $this->assertEmpty($kernel->getContainer()->get(EventOutbox::class)->events());
+        $this->assertEmpty($outbox->events());
     }
-
 }
