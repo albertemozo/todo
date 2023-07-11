@@ -49,7 +49,7 @@ class AddShould extends TestCase
     public function notPersistChangesToTheAggregateIfTheEventsCannotBeRecorded(): void
     {
         $faultyOutbox = new class extends InMemoryEventOutbox {
-            public function save(DomainEvent ...$events): void
+            public function record(DomainEvent ...$events): void
             {
                 throw new RuntimeException('Something went wrong!');
             }

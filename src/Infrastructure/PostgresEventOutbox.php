@@ -19,7 +19,7 @@ class PostgresEventOutbox implements EventOutbox
         $this->connection = $postgres->pdo();
     }
 
-    public function save(DomainEvent ...$events): void
+    public function record(DomainEvent ...$events): void
     {
         foreach ($events as $event) {
             $query = "INSERT INTO event_outbox (id, aggregate_id, occurred_on, type, data) VALUES (:id, :aggregateId, :occurredOn, :type, :data)";

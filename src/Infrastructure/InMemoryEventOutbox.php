@@ -17,7 +17,7 @@ class InMemoryEventOutbox implements EventOutbox
     {
     }
 
-    public function save(DomainEvent ...$events): void
+    public function record(DomainEvent ...$events): void
     {
         $this->events = array_merge($this->events, $events);
     }

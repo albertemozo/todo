@@ -6,7 +6,7 @@ namespace App\Domain;
 
 interface EventOutbox
 {
-    public function save(DomainEvent ...$events): void;
+    public function record(DomainEvent ...$events): void;
 
     public function next(): DomainEvent|null;
 

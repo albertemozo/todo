@@ -29,7 +29,7 @@ readonly class Add
 
         try {
             $this->todoRepository->save($todo);
-            $this->eventOutbox->save(...$todo->pullDomainEvents());
+            $this->eventOutbox->record(...$todo->pullDomainEvents());
         } catch (Throwable $throwable) {
             $this->transaction->rollBack();
             throw $throwable;
