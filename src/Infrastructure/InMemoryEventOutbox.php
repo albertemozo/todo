@@ -32,20 +32,6 @@ class InMemoryEventOutbox implements EventOutbox
 
     public function pop(): DomainEvent|null
     {
-        $event = $this->events[0] ?? null;
-
-        if ($event === null) {
-            return null;
-        }
-
-        $key = array_search($event, $this->events, true);
-
-        if (!is_int($key)) {
-            throw new RuntimeException('Event not found.');
-        }
-
-        array_splice($this->events, $key);
-
-        return $event;
+        return array_pop($this->events);
     }
 }
