@@ -15,7 +15,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 #[AsCommand(name: 'outbox:deliver')]
 class DeliverOutbox extends Command
 {
-    public function __construct(private EventOutbox $outbox, private EventBus $eventBus, private Transaction $transaction)
+    public function __construct(
+        private readonly EventOutbox $outbox,
+        private readonly EventBus    $eventBus,
+        private readonly Transaction $transaction
+    )
     {
         parent::__construct();
     }
