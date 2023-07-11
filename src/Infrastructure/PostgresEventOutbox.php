@@ -43,7 +43,7 @@ class PostgresEventOutbox implements EventOutbox
 
     public function oldest(): DomainEvent|null
     {
-        $query = "SELECT * FROM event_outbox LIMIT 1";
+        $query = "SELECT * FROM event_outbox ORDER BY occurred_on DESC LIMIT 1";
         $stmt = $this->connection->query($query);
         $row = $stmt->fetch();
 
