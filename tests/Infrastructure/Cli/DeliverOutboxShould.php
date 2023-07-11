@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Infrastructure\Cli;
 
+use App\Domain\EventOutbox;
 use App\Domain\TodoCreated;
-use App\Domain\TodoRepository;
-use App\Infrastructure\Cli\DeliverOutbox;
 use App\Infrastructure\InMemoryEventOutbox;
-use App\Infrastructure\InMemoryTodoRepository;
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use App\Domain\EventOutbox;
 
 class DeliverOutboxShould extends KernelTestCase
 {
