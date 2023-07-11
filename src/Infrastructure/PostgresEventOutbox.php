@@ -41,31 +41,6 @@ class PostgresEventOutbox implements EventOutbox
         }
     }
 
-    public function next(): DomainEvent|null
-    {
-        $query = "SELECT * FROM event_outbox ORDER BY occurred_on DESC LIMIT 1";
-        $stmt = $this->connection->query($query);
-        $row = $stmt->fetch();
-
-        if (!$row) {
-            return null;
-        }
-
-        return $row['type']::fromJson($row['id'], $row['aggregate_id'], new DateTimeImmutable($row['occurred_on']), $row['data']);
-    }
-
-    public function remove(DomainEvent $event): void
-    {
-        $query = "DELETE FROM event_outbox WHERE id = :id";
-        $stmt = $this->connection->prepare($query);
-
-        $id = $event->id();
-
-        $stmt->bindParam(':id', $id);
-
-        $stmt->execute();
-    }
-
     public function pop(): DomainEvent|null
     {
         $query = "SELECT * FROM event_outbox ORDER BY occurred_on DESC LIMIT 1";
