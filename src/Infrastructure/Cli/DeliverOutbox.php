@@ -26,7 +26,7 @@ class DeliverOutbox extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        while ($event = $this->outbox->oldest()) {
+        while ($event = $this->outbox->next()) {
             $this->transaction->begin();
             try {
                 $this->outbox->remove($event);

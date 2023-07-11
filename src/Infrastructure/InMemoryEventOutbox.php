@@ -30,7 +30,7 @@ class InMemoryEventOutbox implements EventOutbox
         return $this->events;
     }
 
-    public function oldest(): DomainEvent|null
+    public function next(): DomainEvent|null
     {
         return $this->events[0] ?? null;
     }
